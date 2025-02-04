@@ -12,7 +12,7 @@ def AnagramCheck(s1,s2):
     #remove spaces in string and convert to a list
     s1 = list("".join(s1.split()))
     s2 = list("".join(s2.split()))
-
+  
     #check the length of the 2 strings
     s1_len = len(s1)
     s2_len = len(s2)
@@ -27,3 +27,36 @@ def AnagramCheck(s1,s2):
         return len(s2) == 0 #if length is 0, the 2 strings are anagrams
             
 print(AnagramCheck(s1,s2))
+print(sorted(s1))
+
+#Another Solution
+def anagram(s1,s2):
+
+    s1 = s1.replace(' ','').lower()
+    s2 = s2.replace(' ','').lower()
+
+    #Edge case check
+    if len(s1) != len(s2):
+        return False
+    
+    count = {}
+
+    for letter in s1:
+        if letter in count:
+            count[letter] += 1
+        else:
+            count[letter] = 1
+    
+    for letter in s2:
+        if letter in count:
+            count[letter] -= 1
+        else:
+            count[letter] = 1
+    
+    for k in count:
+        if count[k] != 0:
+            return False
+    return True
+    
+
+print(anagram(s1,s2))
