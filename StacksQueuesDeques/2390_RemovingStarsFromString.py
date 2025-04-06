@@ -29,5 +29,19 @@ def removeStars(s):
     stack_str = "".join(my_list)
     return stack_str
 
+
+#optimized soln using deque
+from collections import deque
+
+def removeStars(s):
+    stack = deque()  # Initialize a deque as the stack
+    
+    for element in s:
+        if element == '*':
+            stack.pop()  # Pop from the stack if a star is encountered
+        else:
+            stack.append(element)  # Push the character onto the stack
+    
+    return ''.join(stack)  # Convert the deque to a string and return it
 print('Output:',removeStars("leet**cod*e"))
 print('Output:',removeStars("erase*****"))  
