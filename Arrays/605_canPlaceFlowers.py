@@ -85,35 +85,58 @@ Pseudo code - check if flower can be planted
 
 flowerbed = [1,0,0,0,1,0,0]
 n = 2
-first attempt 
+#first attempt 
+# def canPlaceFlowers(flowerbed,n):
+#     #initialize flower_count
+#     flower_count = 0
+#     #if 001
+#     in_test = [0,0,1]
+#     if flowerbed[0:3] == in_test:
+#         flower_count += 1
+#     #check if flower can be plantedithout violating the no-adjacent-flowers rule
+#     for i in range(1,len(flowerbed)):
+#         #Check if number is 0 
+#         if flowerbed[i] == 0 and flowerbed[i+1] != 1:
+#             #Check the value to the left and right 
+#             if flowerbed[i-1] == 0 and flowerbed[i+1] == 0:#If left is 0 and right is 0 - we can plant 
+#                 #If we can plant: add 1 to flower_count. 
+#                 flower_count += 1
+#                 #Replace the zero by 1 in the array 
+#                 flowerbed[i] = 1
+#             if flowerbed[i-1] == 0 and flowerbed[i+1] == 1 :#If left is 0 and right is 1 - we can plant 
+#                 #If we can plant: add 1 to flower_count. 
+#                 flower_count += 1
+#                 #Replace the zero by 1 in the array 
+#                 flowerbed[i] = 1
+#         #Compare no of new flowers to n, If new flowers is equal t0 n , return true 
+#         if flower_count == n:
+#             return True 
+#     #Once loop is completed, return false 
+#     return False
+
 def canPlaceFlowers(flowerbed,n):
     #initialize flower_count
     flower_count = 0
-    #if 001
-    in_test = [0,0,1]
-    if flowerbed[0:3] == in_test:
-        flower_count += 1
-    #check if flower can be plantedithout violating the no-adjacent-flowers rule
-    for i in range(1,len(flowerbed)):
-        #Check if number is 0 
-        if flowerbed[i] == 0 and flowerbed[i+1] != 1:
-            #Check the value to the left and right 
-            if flowerbed[i-1] == 0 and flowerbed[i+1] == 0:#If left is 0 and right is 0 - we can plant 
-                #If we can plant: add 1 to flower_count. 
-                flower_count += 1
-                #Replace the zero by 1 in the array 
-                flowerbed[i] = 1
-            if flowerbed[i-1] == 0 and flowerbed[i+1] == 1 :#If left is 0 and right is 1 - we can plant 
-                #If we can plant: add 1 to flower_count. 
-                flower_count += 1
-                #Replace the zero by 1 in the array 
-                flowerbed[i] = 1
-        #Compare no of new flowers to n, If new flowers is equal t0 n , return true 
-        if flower_count == n:
-            return True 
-    #Once loop is completed, return false 
-    return False
+    length = len(flowerbed)
 
+    for i in range(length):
+        #check if current plot is empty
+        if flowerbed[i] == 0:
+            #check left and righr neighbours (handles edges safely)
+            empty_left = (i==0) or (flowerbed[i-1]==0) #i = 0, checks if a plot is on the edge and has no left neighbour
+            empty_right = (i==length-1) or (flowerbed[i+1]==0) #if length - 1 is checked first If i == length - 1, you hit flowerbed[i + 1] first, 
+                                                               #which causes an IndexError because you're accessing out of bounds before checking the safe condition
+                                                               #i is the last index, i == length - 1 evaluates to True
+
+            if empty_left and empty_right:
+                #plant flower
+                flowerbed[i] = 1
+                flower_count += 1
+
+                if flower_count >= n:
+                    return True
+    return flower_count >= n
+print(canPlaceFlowers(flowerbed,n)) #expected - true
 
                 
 
