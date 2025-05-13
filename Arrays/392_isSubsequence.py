@@ -34,4 +34,29 @@ def isSubsequence(s,t):
     
     return False
 
+###############rewritten comments for better readability########
+def isSubsequence(self, s, t):
+    # Edge case: if s is empty, it's always a subsequence
+    if len(s) == 0:
+        return True
+    
+    # If s is longer than t, it can't be a subsequence
+    if len(s) > len(t):
+        return False
+
+    # Two-pointer approach
+    pt = 0  # Pointer for s
+
+    for letter in t:
+        if letter == s[pt]:
+            pt += 1
+            if pt == len(s):  # All characters in s found in order
+                return True
+
+    return False
+
+
+
+
+
 print(isSubsequence(s = "axc", t = "ahbgxc"))
