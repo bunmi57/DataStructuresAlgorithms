@@ -34,29 +34,44 @@ def build_tree(values):
         i += 1
 
     return root
-########################## Symmetric Tree Solution ########################
-class Solution(object):
-    def isSymmetric(self, root):
-        tree_list = []
+# ########################## Symmetric Tree Solution ########################
+# class Solution(object):
+#     def isSymmetric(self, root):
+#         tree_list = []
        
-        def dfs(node):
-            #base case
-            if not node:
-                return    
-            #condition
+#         def dfs(node):
+#             #base case
+#             if not node:
+#                 return    
+#             #condition
 
-            #recurse tree
-            dfs(node.left)
-            tree_list.append(node.val)
-            dfs(node.right)
-            #use left and right soln 
-            return tree_list
+#             #recurse tree
+#             dfs(node.left)
+#             tree_list.append(node.val)
+#             dfs(node.right)
+#             #use left and right soln 
+#             return tree_list
 
-        returned_tree_list = dfs(root)
-        #split list into 2
-        length = len(returned_tree_list)
-        return tree_list[0:(length//2 + 1)]  == tree_list[:-1-((length//2 + 1)):-1]
+#         returned_tree_list = dfs(root)
+#         #split list into 2
+#         length = len(returned_tree_list)
+#         return tree_list[0:(length//2 + 1)]  == tree_list[:-1-((length//2 + 1)):-1]
 
+# ########################## Symmetric Tree Solution using a helper function ########################
+class Solution(object):
+    def isSymmetric(self,root):
+        def isMirror(t1,t2):
+            if not t1 and not t2:
+                return True
+            if not t1 or not t2:
+                return False
+            return (
+                t1.val == t2.val and 
+                isMirror(t1.left,t2.right) and
+                isMirror (t1.right,t2.left)
+            )
+        
+        return isMirror(root.left,root.right)
 
 
 
@@ -69,7 +84,7 @@ class Solution(object):
 
 # root1_list = [1,2,2,3,4,4,3]
 # root2_list = [1,2,2,3,4,4,3,5,6,]
-root2_list = [1,2,2,3,4,4,3]
+root2_list = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 
 root1 = build_tree(root2_list)
 
@@ -77,9 +92,3 @@ sol = Solution()
 #choose any node and a direction 
 print(sol.isSymmetric(root1))
 
-# test = [3, 2, 4, 1, 4, 2, 3]
-# leng = len(test)
-# print("length =", leng)
-# print("0:3", test[0:(leng//2 + 1)])
-# print("6:3", test[(leng-1):(leng//2)])
-# print(test[:-1-((leng//2 + 1)):-1])
