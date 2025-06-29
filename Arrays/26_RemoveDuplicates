@@ -1,0 +1,41 @@
+class Solution(object):
+    def removeDuplicates(self, nums):
+        #edge case
+        #if nums is empty, return 0
+        if len(nums) == 0 or len(nums) == 1:
+            return len(nums) 
+        
+        #initialize seen as element at index 0
+        seen = nums[0]
+        #initialize unique_element
+        unique_element= 1
+        #if element is same as seen, note index as this is a duplicate, so the index will be replaced by a non duplicate  
+        duplicate_index = []
+
+        #loop through nums
+        for i in range(1,len(nums)):
+
+            if nums[i] == seen:
+                duplicate_index.append(i)
+
+            #if element is not the as seen, it is not a duplicate so:
+            else:
+                unique_element += 1 #add 1 to the count of unique element 
+                seen = nums[i]      #update the new element as seen
+                #if there is a value in "duplicate_index", means there is an index with a duplicate value so replace this with the unique element
+                #check that there is a value before replacing, to avoid error 
+                if len(duplicate_index) >= 1:
+                    nums[duplicate_index[0]] = nums[i]
+                    duplicate_index.pop(0) #pop the replaced index
+                    #if you are replacing this value, this means this position is now vacant 
+                    duplicate_index.append(i)
+
+        return unique_element, nums
+
+
+
+
+#function call 
+nums = [0,0,1,1,1,2,2,3,3,4]
+sol = Solution()
+print(sol.removeDuplicates(nums))
